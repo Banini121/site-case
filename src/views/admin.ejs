@@ -1,0 +1,250 @@
+<% if (!canManage) { %>
+  <section class="card section-card">
+    <div class="empty-state">
+      <div class="empty-state__icon"><i class="bi bi-shield-lock"></i></div>
+      <h3 class="mb-1">Нет доступа</h3>
+      <p class="text-muted mb-0">Эта страница доступна только руководству или dev-ролям.</p>
+    </div>
+  </section>
+<% } else { %>
+<<<<<<< HEAD
+  <section class="admin-hero">
+    <div class="admin-hero__content">
+      <div class="admin-hero__kicker">
+        <span class="badge badge--soft">
+          <i class="bi bi-stars me-1"></i>
+          Админ панель
+        </span>
+        <span class="text-muted small">управление пользователями и кейсами</span>
+      </div>
+
+      <h2 class="mb-2">Управление проектом</h2>
+      <p class="text-muted mb-0">
+        Быстро редактируй кейсы, подтверждай пользователей и управляй балансом — всё здесь.
+      </p>
+=======
+  <section class="row g-3 mb-4">
+    <div class="col-lg-6">
+      <button class="tile" data-modal="users-modal">
+        <h3>Пользователи</h3>
+        <p>Управление доступом, балансом и блокировками.</p>
+      </button>
+    </div>
+    <div class="col-lg-6">
+      <button class="tile" data-modal="cases-modal">
+        <h3>Кейсы</h3>
+        <p>Создание, редактирование и отключение кейсов.</p>
+      </button>
+>>>>>>> c8f42b1ee45122249afd1add79edf71e07a9c1e6
+    </div>
+  </section>
+
+  <section class="row g-3 mb-4">
+    <div class="col-lg-6">
+      <button class="tile tile--users" data-modal="users-modal">
+        <div class="tile-head">
+          <div class="tile-icon"><i class="bi bi-people-fill"></i></div>
+          <div class="tile-title">
+            <h3 class="mb-1">Пользователи</h3>
+            <p class="text-muted small mb-0">Доступ, баланс, блокировки и подтверждения.</p>
+          </div>
+        </div>
+        <div class="tile-foot">
+          <span class="tile-cta">Открыть <i class="bi bi-arrow-right"></i></span>
+        </div>
+      </button>
+    </div>
+
+    <div class="col-lg-6">
+      <button class="tile tile--cases" data-modal="cases-modal">
+        <div class="tile-head">
+          <div class="tile-icon"><i class="bi bi-box2-heart-fill"></i></div>
+          <div class="tile-title">
+            <h3 class="mb-1">Кейсы</h3>
+            <p class="text-muted small mb-0">Создание, настройка, лимиты и отключение.</p>
+          </div>
+        </div>
+        <div class="tile-foot">
+          <span class="tile-cta">Открыть <i class="bi bi-arrow-right"></i></span>
+        </div>
+      </button>
+    </div>
+  </section>
+
+  <!-- Users modal -->
+  <div class="modal" id="users-modal" aria-hidden="true">
+    <div class="modal-content">
+      <button class="modal-close" data-close aria-label="Закрыть">×</button>
+
+      <div class="modal-head modal-head--sticky">
+        <div class="modal-title">
+          <div class="modal-title__icon"><i class="bi bi-people"></i></div>
+          <div>
+            <h2 class="mb-0">Пользователи</h2>
+            <p class="text-muted small mb-0">Подтверждение, баланс и блокировки</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tabs">
+        <button class="tab active" data-tab="approved">
+          <i class="bi bi-check2-circle me-1"></i>
+          Подтвержденные
+        </button>
+        <button class="tab" data-tab="pending">
+          <i class="bi bi-clock-history me-1"></i>
+          Ожидают подтверждения
+        </button>
+      </div>
+
+      <div class="tab-content active" data-tab-panel="approved">
+        <div id="approved-users"></div>
+      </div>
+
+      <div class="tab-content" data-tab-panel="pending">
+        <div id="pending-users"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- User detail modal -->
+  <div class="modal" id="user-detail-modal" aria-hidden="true">
+    <div class="modal-content">
+      <button class="modal-close" data-close aria-label="Закрыть">×</button>
+      <div id="user-detail"></div>
+    </div>
+  </div>
+
+  <!-- Cases modal -->
+  <div class="modal" id="cases-modal" aria-hidden="true">
+    <div class="modal-content">
+      <button class="modal-close" data-close aria-label="Закрыть">×</button>
+
+      <div class="cases-header">
+        <div class="cases-header__left">
+          <div class="modal-title">
+          <div class="modal-title__icon"><i class="bi bi-box2-heart"></i></div>
+          <div>
+            <h2 class="mb-0">Кейсы</h2>
+            <p class="text-muted small mb-0">Создание и редактирование</p>
+          </div>
+        </div>
+        </div>
+
+        <div class="cases-header__right">
+          <button class="btn btn-primary btn-pill" id="create-case">
+          <i class="bi bi-plus-lg me-1"></i>
+          Создать кейс
+        </button>
+        </div>
+      </div>
+      <p class="text-muted small">Для изображения указывайте прямой URL на картинку (например, .png/.jpg).</p>
+      <div id="cases-admin-list" class="cases-admin-list"></div>
+    </div>
+  </div>
+
+  <!-- Case editor modal -->
+  <div class="modal" id="case-editor-modal" aria-hidden="true">
+    <div class="modal-content">
+<<<<<<< HEAD
+      <button class="modal-close" data-close aria-label="Закрыть">×</button>
+
+      <div class="modal-head">
+        <div class="modal-title">
+          <div class="modal-title__icon"><i class="bi bi-sliders"></i></div>
+          <div>
+            <h2 id="case-editor-title" class="mb-0">Кейс</h2>
+            <p class="text-muted small mb-0">Настройка цены, лимитов и призов</p>
+          </div>
+=======
+      <button class="modal-close" data-close>×</button>
+      <h2 id="case-editor-title">Кейс</h2>
+      <form id="case-form">
+        <input name="name" class="form-control" placeholder="Название кейса" required />
+        <input name="price" type="number" class="form-control" placeholder="Цена" required />
+        <input name="minLevel" class="form-control" placeholder="Минимальный уровень" required />
+        <input name="maxPerUser" type="number" class="form-control" placeholder="Лимит на пользователя" required />
+        <input name="maxTotal" type="number" class="form-control" placeholder="Общий лимит" required />
+        <input name="imageUrl" class="form-control" placeholder="URL изображения кейса" />
+        <label class="checkbox">
+          <input type="checkbox" name="disabled" />
+          Отключить кейс
+        </label>
+        <div class="prize-editor">
+          <h3>Призы</h3>
+          <div id="prize-fields"></div>
+          <button type="button" class="btn btn-secondary" id="add-prize">+ Добавить приз</button>
+>>>>>>> c8f42b1ee45122249afd1add79edf71e07a9c1e6
+        </div>
+      </div>
+
+      <form id="case-form" class="form-modern">
+        <div class="row g-3">
+          <div class="col-md-7">
+            <label class="form-label">Название</label>
+            <input name="name" class="form-control" placeholder="Название кейса" required />
+          </div>
+
+          <div class="col-md-5">
+            <label class="form-label">Цена</label>
+            <input name="price" type="number" class="form-control" placeholder="Цена" required />
+          </div>
+
+          <div class="col-md-4">
+            <label class="form-label">Минимальный уровень</label>
+            <input name="minLevel" class="form-control" placeholder="Минимальный уровень" required />
+          </div>
+
+          <div class="col-md-4">
+            <label class="form-label">Лимит на пользователя</label>
+            <input name="maxPerUser" type="number" class="form-control" placeholder="Лимит на пользователя" required />
+          </div>
+
+          <div class="col-md-4">
+            <label class="form-label">Общий лимит</label>
+            <input name="maxTotal" type="number" class="form-control" placeholder="Общий лимит" required />
+          </div>
+
+          <div class="col-12">
+            <label class="form-label">URL изображения</label>
+            <input name="imageUrl" class="form-control" placeholder="URL изображения кейса" />
+          </div>
+
+          <div class="col-12">
+            <label class="form-check form-switch m-0">
+              <input type="checkbox" class="form-check-input" name="disabled" />
+              <span class="form-check-label">Отключить кейс</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="divider my-4"></div>
+
+        <div class="prize-editor">
+          <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+            <h3 class="mb-0">Призы</h3>
+            <button type="button" class="btn btn-outline-primary btn-sm btn-pill" id="add-prize">
+              <i class="bi bi-plus-circle me-1"></i>
+              Добавить приз
+            </button>
+          </div>
+
+          <div id="prize-fields" class="prize-fields mt-3"></div>
+        </div>
+
+        <div class="form-actions">
+          <button class="btn btn-primary btn-pill" type="submit">
+            <i class="bi bi-check2 me-1"></i>
+            Сохранить
+          </button>
+          <button class="btn btn-cancel btn-pill" type="button" id="close-case-editor">
+            <i class="bi bi-x-lg me-1"></i>
+            Отмена
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  
+
+<% } %>

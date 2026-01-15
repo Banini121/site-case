@@ -1,0 +1,114 @@
+<<<<<<< HEAD
+<section class="hero hero--home">
+  <div class="hero-bg" aria-hidden="true"></div>
+
+  <div class="hero-content">
+    <div class="hero-left">
+      <div class="hero-kicker">
+        <span class="badge badge--primary">
+          <i class="bi bi-lightning-charge-fill me-1"></i>
+          Открывай быстро
+        </span>
+        <span class="badge badge--soft">
+          <i class="bi bi-shield-check me-1"></i>
+          Безопасно
+        </span>
+      </div>
+
+      <h1 class="hero-title">
+        Открывай кейсы, прокачивайся<br />
+        и получай крутые призы ✨
+      </h1>
+
+      <p class="hero-subtitle">
+        Всё в одном месте: баланс, статистика и доступные кейсы.
+        Нажимай — и пусть выпадет что-то жирное 😄
+      </p>
+
+      <div class="hero-actions">
+        <a href="/cases" class="btn btn-primary btn-lg btn-pill">
+          <i class="bi bi-play-fill me-1"></i>
+          Открыть кейс
+        </a>
+        <button data-action="refresh-cases" class="btn btn-outline-primary btn-lg btn-pill">
+          <i class="bi bi-arrow-repeat me-1"></i>
+          Обновить
+        </button>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="stat-grid stat-grid--big">
+        <div class="stat-card stat-card--accent">
+          <div class="stat-icon"><i class="bi bi-wallet2"></i></div>
+          <div>
+            <div class="stat-label">Баланс</div>
+            <div class="stat-value"><%= user.balance %></div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon"><i class="bi bi-box2-heart"></i></div>
+          <div>
+            <div class="stat-label">Открыто кейсов</div>
+            <div class="stat-value"><%= user.openedCasesCount %></div>
+          </div>
+        </div>
+</div>
+
+        <div class="stat-card stat-card--glass">
+          <div class="stat-icon"><i class="bi bi-stars"></i></div>
+          <div>
+            <div class="stat-label">Совет дня</div>
+            <div class="stat-value stat-value--small">Не забудь чекнуть лимит кейса 👀</div>
+          </div>
+=======
+<section class="hero card mb-4">
+  <div class="row g-4 align-items-center">
+    <div class="col-lg-7">
+      <h2 class="mb-2">Добро пожаловать в панель кейсов</h2>
+      <p class="text-muted">Открывайте кейсы и следите за балансом в одном месте.</p>
+    </div>
+    <div class="col-lg-5">
+      <div class="stat-grid">
+        <div class="stat-card">
+          <span class="text-muted">Баланс</span>
+          <strong><%= user.balance %></strong>
+        </div>
+        <div class="stat-card">
+          <span class="text-muted">Открыто кейсов</span>
+          <strong><%= user.openedCasesCount %></strong>
+>>>>>>> c8f42b1ee45122249afd1add79edf71e07a9c1e6
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<<<<<<< HEAD
+<section class="card section-card">
+  <div class="section-head">
+    <div>
+      <h3 class="mb-1">Доступные кейсы</h3>
+      <p class="text-muted small mb-0">Выбирай любой и открывай прямо здесь.</p>
+    </div>
+    <a href="/cases" class="btn btn-outline-dark btn-sm btn-pill">
+      Все кейсы
+      <i class="bi bi-arrow-right ms-1"></i>
+    </a>
+=======
+<section class="card">
+  <div class="d-flex align-items-center justify-content-between mb-3">
+    <h3 class="mb-0">Доступные кейсы</h3>
+    <button data-action="refresh-cases" class="btn btn-outline-primary btn-sm">Обновить</button>
+>>>>>>> c8f42b1ee45122249afd1add79edf71e07a9c1e6
+  </div>
+
+  <div id="cases-list" class="cases-grid"></div>
+
+  <div class="section-foot">
+    <div class="text-muted small">
+      Если карточки не появились — нажми «Обновить» вверху страницы.
+    </div>
+  </div>
+</section>

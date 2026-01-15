@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="csrf-token" content="<%= csrfToken %>" />
+  <meta name="theme-color" content="#4f46e5" />
+  <title><%= title %></title>
+<<<<<<< HEAD
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Vendor -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+        crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
+  <!-- App -->
+=======
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+>>>>>>> c8f42b1ee45122249afd1add79edf71e07a9c1e6
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+
+<body>
+  <% const viewUser = typeof user !== 'undefined' ? user : null; %>
+<<<<<<< HEAD
+
+  <!-- Decorative background blobs -->
+  <div class="bg-blobs" aria-hidden="true">
+    <span class="blob blob--a"></span>
+    <span class="blob blob--b"></span>
+    <span class="blob blob--c"></span>
+  </div>
+
+  <% if (showNav) { %>
+  <header class="header">
+    <div class="container header-inner">
+      <a class="brand" href="/app" aria-label="Кейсики — на главную">
+        <span class="brand-icon"><i class="bi bi-box-seam"></i></span>
+        <span class="brand-text">Кейсики</span>
+        <span class="brand-badge">BETA</span>
+      </a>
+
+      <nav class="nav-pill" aria-label="Основная навигация">
+        <a href="/app" class="nav-link">
+          <i class="bi bi-grid-1x2-fill me-1"></i>
+          Главная
+        </a>
+        <a href="/cases" class="nav-link">
+          <i class="bi bi-collection-fill me-1"></i>
+          Кейсы
+        </a>
+
+        <% if (viewUser && (viewUser.level === 'leadership' || viewUser.level === 'dev')) { %>
+          <a href="/admin" class="nav-link">
+            <i class="bi bi-shield-lock-fill me-1"></i>
+            Админ
+          </a>
+        <% } %>
+      </nav>
+
+      <div class="header-right">
+        <% if (viewUser) { %>
+          <div class="mini-user">
+            <div class="mini-user__meta">
+              <div class="mini-user__name"><%= viewUser.username %></div>
+            </div>
+            <div class="mini-user__balance">
+              <span class="text-muted small">Баланс</span>
+              <strong><%= viewUser.balance %></strong>
+            </div>
+          </div>
+        <% } %>
+
+        <button id="logout-btn" class="btn btn-outline-dark btn-square" title="Выйти" aria-label="Выйти"><i class="bi bi-box-arrow-right"></i></button>
+      </div>
+=======
+  <% if (showNav) { %>
+  <header class="header shadow-sm">
+    <div class="container d-flex align-items-center justify-content-between">
+      <div class="d-flex align-items-center gap-2 brand">
+        <i class="bi bi-box-seam"></i>
+        <span>Кейсики</span>
+      </div>
+      <nav class="nav-pill">
+        <a href="/app" class="nav-link">Главная</a>
+        <a href="/cases" class="nav-link">Кейсы</a>
+      <% if (viewUser && (viewUser.level === 'leadership' || viewUser.level === 'dev')) { %>
+          <a href="/admin" class="nav-link">Админ панель</a>
+        <% } %>
+      </nav>
+      <button id="logout-btn" class="btn btn-outline-dark btn-sm">Выйти</button>
+>>>>>>> c8f42b1ee45122249afd1add79edf71e07a9c1e6
+    </div>
+  </header>
+  <% } %>
+
+  <main class="main-content">
+<<<<<<< HEAD
+    <div class="container page-container">
+=======
+    <% if (viewUser) { %>
+      <div class="container">
+        <div class="user-banner">
+          <div class="user-info">
+            <span class="fw-semibold"><%= viewUser.username %></span>
+            <span class="text-muted small"><%= viewUser.level %></span>
+          </div>
+          <div class="user-balance">Баланс: <strong><%= viewUser.balance %></strong></div>
+        </div>
+      </div>
+    <% } %>
+    <div class="container">
+>>>>>>> c8f42b1ee45122249afd1add79edf71e07a9c1e6
+      <%- body %>
+    </div>
+  </main>
+
+  <!-- Case opening modal (used by app.js) -->
+  <div class="modal" id="case-spinner" aria-hidden="true">
+    <div class="modal-content modal-content--small">
+      <button class="modal-close" data-close aria-label="Закрыть">×</button>
+
+      <div class="modal-head">
+        <div class="modal-title">
+          <div class="modal-title__icon"><i class="bi bi-stars"></i></div>
+          <div>
+            <h2 class="mb-0">Открытие кейса</h2>
+            <p class="text-muted small mb-0">Удачи! 🎁</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="spinner-track">
+        <div class="spinner-reel" id="spinner-reel"></div>
+      </div>
+
+      <div class="spinner-result" id="spinner-result"></div>
+    </div>
+  </div>
+
+  <script src="/app.js" defer></script>
+</body>
+</html>
