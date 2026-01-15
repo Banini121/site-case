@@ -64,7 +64,8 @@ export async function pageRoutes(app) {
     defaultContext: {
       user: null,
       showNav: true,
-      csrfToken: ''
+      csrfToken: '',
+      pageCss: 'app.css'
     }
   });
 
@@ -74,7 +75,7 @@ export async function pageRoutes(app) {
       clearAuthCookies(reply);
     }
     const csrfToken = attachCsrf(reply);
-    return reply.view('login', { title: 'Вход', csrfToken, showNav: false, user: null });
+    return reply.view('login', { title: 'Вход', csrfToken, showNav: false, user: null, pageCss: 'login.css' });
   });
 
   app.get('/app', async (request, reply) => {
@@ -93,7 +94,7 @@ export async function pageRoutes(app) {
       reply.redirect('/');
       return;
     }
-    return reply.view('app', { title: 'Главная', csrfToken, user, showNav: true });
+    return reply.view('app', { title: 'Главная', csrfToken, user, showNav: true, pageCss: 'app.css' });
   });
 
   app.get('/cases', async (request, reply) => {
@@ -112,7 +113,7 @@ export async function pageRoutes(app) {
       reply.redirect('/');
       return;
     }
-    return reply.view('cases', { title: 'Кейсы', csrfToken, user, showNav: true });
+    return reply.view('cases', { title: 'Кейсы', csrfToken, user, showNav: true, pageCss: 'cases.css' });
   });
 
   app.get('/pending', async (request, reply) => {
@@ -130,7 +131,13 @@ export async function pageRoutes(app) {
       return;
     }
     const csrfToken = attachCsrf(reply);
-    return reply.view('pending', { title: 'Ожидание подтверждения', csrfToken, user, showNav: true });
+    return reply.view('pending', {
+      title: 'Ожидание подтверждения',
+      csrfToken,
+      user,
+      showNav: true,
+      pageCss: 'pending.css'
+    });
   });
 
   app.get('/admin', async (request, reply) => {
@@ -150,7 +157,8 @@ export async function pageRoutes(app) {
       csrfToken,
       user,
       showNav: true,
-      canManage
+      canManage,
+      pageCss: 'admin.css'
     });
   });
 }

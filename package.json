@@ -5,7 +5,8 @@
   "main": "src/server.js",
   "type": "module",
   "scripts": {
-    "start": "node src/server.js"
+    "start": "node src/server.js",
+    "build:css": "sass --no-source-map src/styles/app.scss:public/app.css src/styles/cases.scss:public/cases.css src/styles/admin.scss:public/admin.css src/styles/login.scss:public/login.css src/styles/pending.scss:public/pending.css"
   },
   "dependencies": {
     "@fastify/cookie": "9.3.0",
@@ -17,5 +18,8 @@
     "fastify": "4.28.1",
     "jose": "5.9.6",
     "mongodb": "6.5.0"
+  },
+  "devDependencies": {
+    "sass": "1.77.8"
   }
 }
