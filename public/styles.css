@@ -304,15 +304,16 @@ b,strong{ font-weight: 700; }
 
 .cases-grid{
   display:grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(240px, 320px));
   gap: 14px;
+  justify-content: center;
 }
 @media (max-width: 992px){
   .hero-content{ grid-template-columns: 1fr; }
-  .cases-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cases-grid{ grid-template-columns: repeat(2, minmax(240px, 320px)); }
 }
 @media (max-width: 560px){
-  .cases-grid{ grid-template-columns: 1fr; }
+  .cases-grid{ grid-template-columns: minmax(240px, 320px); }
 }
 
 .case-card{
