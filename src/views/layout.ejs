@@ -84,7 +84,7 @@
     </div>
   </main>
 
-  <!-- Case opening modal (used by app.js) -->
+  <!-- Case opening modal (used by cases modules) -->
   <div class="modal" id="case-spinner" aria-hidden="true">
     <div class="modal-content modal-content--small">
       <button class="modal-close" data-close aria-label="Закрыть">×</button>
@@ -107,6 +107,8 @@
     </div>
   </div>
 
-  <script src="/app.js" defer></script>
+  <% if (pageScript) { %>
+    <script type="module" src="<%= pageScript %>" defer></script>
+  <% } %>
 </body>
 </html>
