@@ -295,12 +295,14 @@ export async function apiRoutes(app) {
             type: 'array',
             items: {
               type: 'object',
-              required: ['name', 'quantity', 'rarity'],
+              required: ['name', 'rarity'],
               properties: {
                 name: { type: 'string' },
                 quantity: { type: 'number' },
+                count: { type: 'number' },
                 rarity: { type: 'string' },
-                image: { type: 'string' }
+                image: { type: 'string' },
+                emoji: { type: 'string' }
               }
             }
           }
@@ -315,13 +317,16 @@ export async function apiRoutes(app) {
       return;
     }
 
-    const prizes = request.body.prizes.map((prize) => ({
-      name: prize.name,
-      quantity: prize.quantity,
-      remaining: prize.quantity,
-      rarity: prize.rarity,
-      image: prize.image || null
-    }));
+    const prizes = request.body.prizes.map((prize) => {
+      const quantity = Number(prize.quantity ?? prize.count ?? 0);
+      return {
+        name: prize.name,
+        quantity,
+        remaining: quantity,
+        rarity: prize.rarity,
+        image: prize.image ?? prize.emoji ?? null
+      };
+    });
 
     await db.collection('cases').updateOne(
       { name: request.body.name },
