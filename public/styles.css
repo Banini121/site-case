@@ -178,13 +178,13 @@ b,strong{ font-weight: 700; }
   color: #fde68a;
 }
 .btn-cancel{
-  background: var(--danger);
-  border-color: rgba(239,68,68,.45);
+  background: #ef4444;
+  border-color: #ef4444;
   color: #fff;
 }
 .btn-cancel:hover{
   background: #dc2626;
-  border-color: rgba(239,68,68,.65);
+  border-color: #dc2626;
   color: #fff;
 }
 .btn-cancel i{ color: inherit; }
@@ -355,7 +355,7 @@ b,strong{ font-weight: 700; }
 .case-actions .btn{ display:inline-flex; align-items:center; gap: 10px; }
 .case-actions .btn i{ margin-right: 0; }
 .section-card--cases{
-  max-width: 980px;
+  max-width: 960px;
   margin: 0 auto;
 }
 
@@ -364,7 +364,7 @@ b,strong{ font-weight: 700; }
 .tile{
   width: 100%;
   border: 1px solid var(--stroke2);
-  background: rgba(15,23,42,.42);
+  background: var(--card);
   color: var(--text);
   border-radius: var(--r20);
   padding: 18px;
@@ -376,6 +376,7 @@ b,strong{ font-weight: 700; }
   transition: transform .12s ease, border-color .12s ease, background .12s ease;
   appearance: none;
   outline: none;
+  cursor: pointer;
 }
 .tile:hover{
   transform: translateY(-2px);
@@ -385,7 +386,7 @@ b,strong{ font-weight: 700; }
 .tile-head{
   display:flex;
   gap: 12px;
-  align-items:flex-start;
+  align-items:center;
 }
 .tile-icon{
   width: 48px;
@@ -566,7 +567,7 @@ html.modal-open, html.modal-open body{
   border: 1px solid rgba(88,101,242,.25);
 }
 .cases-header__right{
-  padding-right: 16px;
+  margin-right: 12px;
 }
 
 /* ---------------- Tabs (admin users) ---------------- */
@@ -792,7 +793,7 @@ html.modal-open, html.modal-open body{
 }
 .form-control::placeholder{ color: rgba(226,232,240,.45) !important; }
 .form-actions{
-  margin-top: 26px;
+  margin-top: 32px;
   display:flex;
   gap: 10px;
   flex-wrap:wrap;
@@ -802,17 +803,15 @@ html.modal-open, html.modal-open body{
 .form-check.form-switch{
   display:flex;
   align-items:center;
-  gap: 6px;
+  gap: 10px;
   padding-left: 0;
 }
 .form-check.form-switch .form-check-input{
   margin-left: 0;
 }
 .form-check.form-switch .form-check-label{
-  margin-left: 2px;
-  position: relative;
-  top: -2px;
-  line-height: 1;
+  margin-left: 0;
+  line-height: 1.2;
 }
 .form-switch .form-check-input{
   width: 46px;
