@@ -126,7 +126,6 @@ function caseCardHtml(item) {
 async function loadCases(targetId) {
   const target = document.getElementById(targetId);
   if (!target) return;
-<<<<<<< HEAD
 
   try {
     const data = await apiFetch('/api/cases');
@@ -210,40 +209,6 @@ function userCardHtml(user, mode) {
             <div class="user-name">${user.username}</div>
             <div class="muted">${user.discordId}</div>
           </div>
-=======
-  const data = await apiFetch('/api/cases');
-  target.innerHTML = data.cases.map((item) => `
-    <div class="case-card ${item.disabled ? 'disabled' : ''}">
-      ${item.imageUrl ? `<img src="${item.imageUrl}" alt="${item.name}" referrerpolicy="no-referrer">` : '<div class="case-placeholder"></div>'}
-      <div class="case-body">
-        <h3>${item.name}</h3>
-        <div class="case-meta">
-          <span>Цена: ${item.price}</span>
-          <span>Мин. уровень: ${item.minLevel}</span>
-        </div>
-        <div class="case-footer">
-          <span class="muted">Осталось: ${item.remainingTotal}</span>
-          <button class="btn btn-primary" data-open-case="${item.name}" ${item.disabled ? 'disabled' : ''}>Открыть</button>
-        </div>
-      </div>
-    </div>
-  `).join('');
-  attachImageFallback(target);
-}
-
-async function loadAdminCases() {
-  const container = document.getElementById('cases-admin-list');
-  if (!container) return;
-  const data = await apiFetch('/api/admin/cases');
-  container.innerHTML = data.cases.map((item) => `
-    <div class="case-card ${item.disabled ? 'disabled' : ''}">
-      ${item.imageUrl ? `<img src="${item.imageUrl}" alt="${item.name}" referrerpolicy="no-referrer">` : '<div class="case-placeholder"></div>'}
-      <div class="case-body">
-        <h3>${item.name}</h3>
-        <div class="case-meta">
-          <span>Цена: ${item.price}</span>
-          <span>Мин. уровень: ${item.minLevel}</span>
->>>>>>> c8f42b1ee45122249afd1add79edf71e07a9c1e6
         </div>
         <div class="user-actions">
           <button class="btn btn-success btn-pill" data-approve-user="${user.discordId}">✅ Подтвердить</button>
@@ -274,7 +239,6 @@ async function loadAdminCases() {
         </button>
       </div>
     </div>
-<<<<<<< HEAD
   `;
 }
 
@@ -286,19 +250,6 @@ function renderEmptyPending() {
       <div class="empty-sub">Если кто-то зайдёт — он появится здесь автоматически.</div>
     </div>
   `;
-=======
-  `).join('');
-  attachImageFallback(container);
-}
-
-function attachImageFallback(container) {
-  const images = container.querySelectorAll('img');
-  images.forEach((img) => {
-    img.addEventListener('error', () => {
-      img.replaceWith(Object.assign(document.createElement('div'), { className: 'case-placeholder' }));
-    }, { once: true });
-  });
->>>>>>> c8f42b1ee45122249afd1add79edf71e07a9c1e6
 }
 
 async function loadUsers() {

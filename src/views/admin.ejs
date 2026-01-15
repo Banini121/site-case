@@ -7,7 +7,6 @@
     </div>
   </section>
 <% } else { %>
-<<<<<<< HEAD
   <section class="admin-hero">
     <div class="admin-hero__content">
       <div class="admin-hero__kicker">
@@ -22,20 +21,6 @@
       <p class="text-muted mb-0">
         Быстро редактируй кейсы, подтверждай пользователей и управляй балансом — всё здесь.
       </p>
-=======
-  <section class="row g-3 mb-4">
-    <div class="col-lg-6">
-      <button class="tile" data-modal="users-modal">
-        <h3>Пользователи</h3>
-        <p>Управление доступом, балансом и блокировками.</p>
-      </button>
-    </div>
-    <div class="col-lg-6">
-      <button class="tile" data-modal="cases-modal">
-        <h3>Кейсы</h3>
-        <p>Создание, редактирование и отключение кейсов.</p>
-      </button>
->>>>>>> c8f42b1ee45122249afd1add79edf71e07a9c1e6
     </div>
   </section>
 
@@ -138,7 +123,6 @@
         </button>
         </div>
       </div>
-      <p class="text-muted small">Для изображения указывайте прямой URL на картинку (например, .png/.jpg).</p>
       <div id="cases-admin-list" class="cases-admin-list"></div>
     </div>
   </div>
@@ -146,7 +130,6 @@
   <!-- Case editor modal -->
   <div class="modal" id="case-editor-modal" aria-hidden="true">
     <div class="modal-content">
-<<<<<<< HEAD
       <button class="modal-close" data-close aria-label="Закрыть">×</button>
 
       <div class="modal-head">
@@ -156,25 +139,6 @@
             <h2 id="case-editor-title" class="mb-0">Кейс</h2>
             <p class="text-muted small mb-0">Настройка цены, лимитов и призов</p>
           </div>
-=======
-      <button class="modal-close" data-close>×</button>
-      <h2 id="case-editor-title">Кейс</h2>
-      <form id="case-form">
-        <input name="name" class="form-control" placeholder="Название кейса" required />
-        <input name="price" type="number" class="form-control" placeholder="Цена" required />
-        <input name="minLevel" class="form-control" placeholder="Минимальный уровень" required />
-        <input name="maxPerUser" type="number" class="form-control" placeholder="Лимит на пользователя" required />
-        <input name="maxTotal" type="number" class="form-control" placeholder="Общий лимит" required />
-        <input name="imageUrl" class="form-control" placeholder="URL изображения кейса" />
-        <label class="checkbox">
-          <input type="checkbox" name="disabled" />
-          Отключить кейс
-        </label>
-        <div class="prize-editor">
-          <h3>Призы</h3>
-          <div id="prize-fields"></div>
-          <button type="button" class="btn btn-secondary" id="add-prize">+ Добавить приз</button>
->>>>>>> c8f42b1ee45122249afd1add79edf71e07a9c1e6
         </div>
       </div>
 
