@@ -537,9 +537,9 @@ function createPrizeFieldRow(prize = {}) {
 
   row.innerHTML = `
     <input class="form-control" name="prizeName" placeholder="Название" value="${prize.name || ''}">
-    <input class="form-control" name="prizeCount" type="number" placeholder="Кол-во" value="${prize.count ?? ''}">
+    <input class="form-control" name="prizeCount" type="number" placeholder="Кол-во" value="${prize.quantity ?? prize.count ?? ''}">
     <input class="form-control" name="prizeRarity" placeholder="Редкость" value="${prize.rarity || ''}">
-    <input class="form-control" name="prizeEmoji" placeholder="URL/эмодзи" value="${prize.emoji || ''}">
+    <input class="form-control" name="prizeEmoji" placeholder="URL/эмодзи" value="${prize.image || prize.emoji || ''}">
     <button type="button" class="btn btn-danger btn-icon" data-remove-prize>×</button>
   `;
   return row;
@@ -616,7 +616,12 @@ if (caseForm) {
         const count = Number(row.querySelector('[name="prizeCount"]')?.value || 0);
         const rarity = row.querySelector('[name="prizeRarity"]')?.value?.trim();
         const emoji = row.querySelector('[name="prizeEmoji"]')?.value?.trim();
-        if (name) prizes.push({ name, count, rarity, emoji });
+        if (name) prizes.push({
+          name,
+          quantity: count,
+          rarity,
+          image: emoji || null,
+        });
       });
     }
 
