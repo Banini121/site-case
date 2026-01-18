@@ -6,20 +6,14 @@ const encoder = new TextEncoder();
 
 export const LEVELS = {
   PENDING: 'pending',
-  ADMIN_1: 'admin_1',
-  ADMIN_2: 'admin_2',
-  ADMIN_3: 'admin_3',
-  ADMIN_4: 'admin_4',
+  USER: 'user',
   LEADERSHIP: 'leadership',
   DEV: 'dev'
 };
 
 export const LEVEL_ORDER = [
   LEVELS.PENDING,
-  LEVELS.ADMIN_1,
-  LEVELS.ADMIN_2,
-  LEVELS.ADMIN_3,
-  LEVELS.ADMIN_4,
+  LEVELS.USER,
   LEVELS.LEADERSHIP,
   LEVELS.DEV
 ];

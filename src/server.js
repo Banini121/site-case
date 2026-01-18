@@ -33,7 +33,7 @@ await app.register(rateLimit, {
 
 app.addHook('onSend', async (_, reply, payload) => {
   reply.header('Strict-Transport-Security', 'max-age=63072000; includeSubDomains; preload');
-  reply.header('Content-Security-Policy', "default-src 'self'; img-src 'self' data: https:; style-src 'self' https://cdn.jsdelivr.net; font-src 'self' https://cdn.jsdelivr.net; script-src 'self'; frame-ancestors 'none'; base-uri 'self';");
+  reply.header('Content-Security-Policy', "default-src 'self'; img-src 'self' data: https:; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com; script-src 'self' https://cdn.tailwindcss.com 'unsafe-inline'; frame-ancestors 'none'; base-uri 'self';");
   reply.header('X-Frame-Options', 'DENY');
   reply.header('X-Content-Type-Options', 'nosniff');
   reply.header('Referrer-Policy', 'strict-origin');

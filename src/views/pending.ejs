@@ -1,19 +1,31 @@
-<div class="auth-wrapper">
-  <div class="pending-card">
-    <div class="pending-icon">
-      <i class="bi bi-hourglass-split"></i>
-    </div>
-    <h2>Подтверждение аккаунта</h2>
-    <p class="text-muted mb-2">Мы проверяем ваш доступ. Обычно это занимает несколько минут.</p>
-    <p class="text-muted mb-0">Как только руководство подтвердит аккаунт, вы получите доступ к панели.</p>
+<div class="min-h-[calc(100vh-5rem)] flex items-start justify-center pt-10 md:pt-16">
+  <div class="max-w-2xl w-full glass rounded-[2rem] px-8 md:px-10 py-10 md:py-12 bg-surface-dark/80 border border-white/10">
+    <div class="flex flex-col items-center text-center space-y-6">
+      <div class="w-14 h-14 rounded-2xl bg-amber-500/10 border border-amber-400/30 flex items-center justify-center text-amber-300">
+        <span class="material-icons-round text-3xl">hourglass_top</span>
+      </div>
 
-    <div class="pending-progress" aria-hidden="true">
-      <div class="pending-progress__bar"></div>
-    </div>
+      <div class="space-y-2">
+        <h2 class="text-2xl md:text-3xl font-display font-semibold text-white">Подтверждение аккаунта</h2>
+        <p class="text-slate-400 text-sm md:text-base">
+          Мы проверяем ваш доступ. Обычно это занимает несколько минут.
+        </p>
+        <p class="text-slate-500 text-xs md:text-sm">
+          Как только руководство подтвердит аккаунт, вы получите доступ к панели.
+        </p>
+      </div>
 
-    <div class="pending-tip">
-      <i class="bi bi-info-circle"></i>
-      <span>Можно обновить страницу через минуту — статус подтянется автоматически.</span>
+      <div class="w-full space-y-4" aria-hidden="true">
+        <div class="pending-progress">
+          <div class="pending-progress__bar"></div>
+        </div>
+        <div class="flex items-start gap-3 text-left text-xs md:text-sm text-slate-400">
+          <span class="mt-0.5">
+            <span class="material-icons-round text-base text-primary">info</span>
+          </span>
+          <span>Можно обновить страницу через минуту — статус подтянется автоматически.</span>
+        </div>
+      </div>
     </div>
   </div>
 </div>

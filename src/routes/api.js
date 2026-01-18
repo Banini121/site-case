@@ -6,6 +6,13 @@ import { levelAtLeast, LEVELS, LEVEL_ORDER, verifyCsrfToken } from '../security.
 import { getAccessPayload } from '../authentication.js';
 import crypto from 'node:crypto';
 
+const RARITY_WEIGHTS = {
+  'Редкий': 50,
+  'Эпический': 30,
+  'Мифический': 15,
+  'Легендарный': 5
+};
+
 function requireOrigin(request) {
   const origin = request.headers.origin;
   if (!origin) return false;
@@ -64,18 +71,18 @@ function requireWriteLimit(request, reply) {
 }
 
 function parsePrizeChoice(prizes) {
-  const available = prizes.filter((prize) => prize.remaining > 0);
-  const total = available.reduce((sum, prize) => sum + prize.remaining, 0);
-  if (total <= 0) return null;
+  const rarityWeights = RARITY_WEIGHTS;
+  const available = (prizes || []).filter((p) => p && (p.remaining == null || p.remaining > 0));
+  if (!available.length) return null;
+  const weights = available.map((p) => Math.max(1, Number(rarityWeights[p.rarity] ?? 10)));
+  const total = weights.reduce((a, b) => a + b, 0);
   const roll = crypto.randomInt(0, total);
-  let current = 0;
-  for (const prize of available) {
-    current += prize.remaining;
-    if (roll < current) {
-      return prize;
-    }
+  let acc = 0;
+  for (let i = 0; i < available.length; i++) {
+    acc += weights[i];
+    if (roll < acc) return available[i];
   }
-  return available[0];
+  return available[available.length - 1];
 }
 
 export async function apiRoutes(app) {
@@ -100,17 +107,69 @@ export async function apiRoutes(app) {
       return;
     }
     const cases = await db.collection('cases').find({}).toArray();
-    const result = cases.map((item) => ({
-      name: item.name,
-      price: item.price,
-      minLevel: item.minLevel,
-      remainingTotal: item.prizes.reduce((sum, prize) => sum + prize.remaining, 0),
-      imageUrl: item.imageUrl || null,
-      disabled: Boolean(item.disabled)
-    }));
+    const opens = await db.collection('case_opens').aggregate([
+      { $match: { userId: user.discordId } },
+      { $group: { _id: '$caseName', count: { $sum: 1 } } }
+    ]).toArray();
+    const opensByName = Object.fromEntries(opens.map((x) => [x._id, x.count]));
+
+    const result = cases.map((item) => {
+      const totalOpened = Number(item.totalOpened || 0);
+      const maxTotal = Number(item.maxTotal || 0);
+      const userOpens = Number(opensByName[item.name] || 0);
+      const maxPerUser = Number(item.maxPerUser || 0);
+
+      let remainingTotal = null;
+      if (maxTotal > 0) remainingTotal = Math.max(maxTotal - totalOpened, 0);
+
+      let remainingPerUser = null;
+      if (maxPerUser > 0) remainingPerUser = Math.max(maxPerUser - userOpens, 0);
+
+      return {
+        name: item.name,
+        price: item.price,
+        remainingTotal,
+        remainingPerUser,
+        imageUrl: item.imageUrl || null,
+        disabled: Boolean(item.disabled),
+        prizesBrief: (item.prizes || []).map((p) => ({ name: p.name, rarity: p.rarity || '', emoji: p.image || null }))
+      };
+    });
     const levelIndex = (level) => LEVEL_ORDER.indexOf(level);
-    result.sort((a, b) => levelIndex(a.minLevel) - levelIndex(b.minLevel));
+    result.sort((a, b) => levelIndex(a.minLevel || LEVELS.USER) - levelIndex(b.minLevel || LEVELS.USER));
     reply.send({ cases: result });
+  });
+
+  app.get('/me', async (request, reply) => {
+    const db = getDb();
+    const user = await db.collection('users').findOne({ discordId: request.userPayload.sub });
+    if (!user || user.blocked || !user.approved || user.level === LEVELS.PENDING) {
+      reply.code(403).send({ message: 'Access denied' });
+      return;
+    }
+    const prizes = await db.collection('case_opens')
+      .find({ userId: user.discordId })
+      .sort({ createdAt: -1 })
+      .limit(200)
+      .toArray();
+    reply.send({
+      user: {
+        discordId: user.discordId,
+        username: user.username,
+        level: user.level,
+        balance: user.balance,
+        approved: user.approved,
+        blocked: Boolean(user.blocked),
+        avatarUrl: user.avatarUrl || null,
+        createdAt: user.createdAt || null
+      },
+      prizes: prizes.map((entry) => ({
+        caseName: entry.caseName,
+        prize: entry.prize,
+        createdAt: entry.createdAt,
+        confirmedAt: entry.confirmedAt || null
+      }))
+    });
   });
 
   app.post('/cases/open', {
@@ -140,10 +199,6 @@ export async function apiRoutes(app) {
       reply.code(400).send({ message: 'Case disabled' });
       return;
     }
-    if (!levelAtLeast(user.level, caseItem.minLevel)) {
-      reply.code(403).send({ message: 'Insufficient level' });
-      return;
-    }
     if (user.balance < caseItem.price) {
       reply.code(400).send({ message: 'Insufficient balance' });
       return;
@@ -153,11 +208,15 @@ export async function apiRoutes(app) {
       userId: user.discordId,
       caseName: caseItem.name
     });
-    if (userCaseOpens >= caseItem.maxPerUser) {
+
+    const maxPerUser = Number(caseItem.maxPerUser || 0);
+    if (maxPerUser > 0 && userCaseOpens >= maxPerUser) {
       reply.code(400).send({ message: 'User case limit reached' });
       return;
     }
-    if (caseItem.totalOpened >= caseItem.maxTotal) {
+
+    const maxTotal = Number(caseItem.maxTotal || 0);
+    if (maxTotal > 0 && Number(caseItem.totalOpened || 0) >= maxTotal) {
       reply.code(400).send({ message: 'Case total limit reached' });
       return;
     }
@@ -170,7 +229,8 @@ export async function apiRoutes(app) {
 
     const updatedPrizes = caseItem.prizes.map((prize) => {
       if (prize.name === prizeChoice.name) {
-        return { ...prize, remaining: prize.remaining - 1 };
+        if (prize.remaining == null) return prize;
+        return { ...prize, remaining: Math.max((prize.remaining || 0) - 1, 0) };
       }
       return prize;
     });
@@ -194,7 +254,18 @@ export async function apiRoutes(app) {
     prizeLog({ event: 'case_open', userId: user.discordId, caseName: caseItem.name, prize: prizeChoice.name });
     auditLog({ event: 'case_open', userId: user.discordId, caseName: caseItem.name });
 
-    reply.send({ prize: prizeChoice });
+    const prizeNames = (caseItem.prizes || [])
+      .map((p) => p.name || p.emoji || '')
+      .filter(Boolean);
+    const loop = [];
+    while (loop.length < 16 && prizeNames.length) {
+      loop.push(...prizeNames);
+    }
+    const base = loop.length ? loop.slice(0, 16) : Array.from({ length: 16 }, (_, i) => String(i + 1));
+    const prizeIndex = 12;
+    const display = base.slice(0, prizeIndex).concat([prizeChoice.name], base.slice(prizeIndex));
+
+    reply.send({ prize: prizeChoice, display });
   });
 
   app.post('/admin/balance', {
@@ -241,8 +312,17 @@ export async function apiRoutes(app) {
       reply.code(403).send({ message: 'Access denied' });
       return;
     }
+    const allowedLevels = [LEVELS.USER, LEVELS.LEADERSHIP, LEVELS.DEV];
+    if (!allowedLevels.includes(request.body.level)) {
+      reply.code(400).send({ message: 'Invalid level' });
+      return;
+    }
     if (request.body.level === LEVELS.DEV && actor.level !== LEVELS.DEV) {
       reply.code(403).send({ message: 'Only dev can assign dev' });
+      return;
+    }
+    if (request.body.userId === actor.discordId) {
+      reply.code(400).send({ message: 'Cannot change own level' });
       return;
     }
     await db.collection('users').updateOne(
@@ -282,11 +362,11 @@ export async function apiRoutes(app) {
     schema: {
       body: {
         type: 'object',
-        required: ['name', 'price', 'minLevel', 'maxPerUser', 'maxTotal', 'prizes'],
+        required: ['name', 'price', 'maxPerUser', 'maxTotal', 'prizes'],
         properties: {
           name: { type: 'string', minLength: 1 },
           price: { type: 'number' },
-          minLevel: { type: 'string', minLength: 1 },
+          minLevel: { type: 'string' },
           maxPerUser: { type: 'number' },
           maxTotal: { type: 'number' },
           imageUrl: { type: 'string' },
@@ -317,8 +397,21 @@ export async function apiRoutes(app) {
       return;
     }
 
+    if (request.body.imageUrl) {
+      const okImg = /^https?:\/\/\S+/i.test(request.body.imageUrl);
+      if (!okImg) {
+        reply.code(400).send({ message: 'Invalid image URL' });
+        return;
+      }
+    }
+
+    const rawMinLevel = request.body.minLevel && request.body.minLevel.trim();
+    const allowedLevels = [LEVELS.USER, LEVELS.LEADERSHIP, LEVELS.DEV];
+    const normalizedMinLevel = allowedLevels.includes(rawMinLevel) ? rawMinLevel : LEVELS.USER;
+
     const prizes = request.body.prizes.map((prize) => {
-      const quantity = Number(prize.quantity ?? prize.count ?? 0);
+      const hasQty = prize.quantity != null || prize.count != null;
+      const quantity = hasQty ? Number(prize.quantity ?? prize.count ?? 0) : null;
       return {
         name: prize.name,
         quantity,
@@ -334,7 +427,7 @@ export async function apiRoutes(app) {
         $set: {
           name: request.body.name,
           price: request.body.price,
-          minLevel: request.body.minLevel,
+          minLevel: normalizedMinLevel,
           maxPerUser: request.body.maxPerUser,
           maxTotal: request.body.maxTotal,
           imageUrl: request.body.imageUrl || null,
@@ -479,8 +572,17 @@ export async function apiRoutes(app) {
       reply.code(403).send({ message: 'Access denied' });
       return;
     }
+    const allowedLevels = [LEVELS.USER, LEVELS.LEADERSHIP, LEVELS.DEV];
+    if (!allowedLevels.includes(request.body.level)) {
+      reply.code(400).send({ message: 'Invalid level' });
+      return;
+    }
     if (request.body.level === LEVELS.DEV && actor.level !== LEVELS.DEV) {
       reply.code(403).send({ message: 'Only dev can assign dev' });
+      return;
+    }
+    if (request.params.id === actor.discordId) {
+      reply.code(400).send({ message: 'Cannot change own level' });
       return;
     }
     await db.collection('users').updateOne(
@@ -511,7 +613,7 @@ export async function apiRoutes(app) {
     if (request.body.approved) {
       await db.collection('users').updateOne(
         { discordId: request.params.id },
-        { $set: { approved: true, level: LEVELS.ADMIN_1, updatedAt: new Date() } }
+        { $set: { approved: true, level: LEVELS.USER, updatedAt: new Date() } }
       );
       auditLog({ event: 'user_approved', actor: actor.discordId, target: request.params.id });
     } else {
@@ -541,11 +643,21 @@ export async function apiRoutes(app) {
       reply.code(403).send({ message: 'Access denied' });
       return;
     }
+    if (request.params.id === actor.discordId) {
+      reply.code(400).send({ message: 'Cannot block yourself' });
+      return;
+    }
     await db.collection('users').updateOne(
       { discordId: request.params.id },
       { $set: { blocked: request.body.blocked, updatedAt: new Date() } }
     );
     auditLog({ event: 'user_block', actor: actor.discordId, target: request.params.id, blocked: request.body.blocked });
+    if (request.body.blocked) {
+      await db.collection('sessions').updateMany(
+        { userId: request.params.id },
+        { $set: { revokedAt: new Date() } }
+      );
+    }
     reply.send({ ok: true });
   });
 

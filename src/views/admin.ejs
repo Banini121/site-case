@@ -1,59 +1,71 @@
 <% if (!canManage) { %>
-  <section class="card section-card">
-    <div class="empty-state">
-      <div class="empty-state__icon"><i class="bi bi-shield-lock"></i></div>
-      <h3 class="mb-1">Нет доступа</h3>
-      <p class="text-muted mb-0">Эта страница доступна только руководству или dev-ролям.</p>
+  <section class="max-w-xl mx-auto">
+    <div class="glass rounded-[2rem] px-6 py-5 bg-surface-dark border border-white/10 flex items-start gap-3">
+      <div class="w-10 h-10 rounded-2xl bg-red-500/10 border border-red-400/40 flex items-center justify-center text-red-400">
+        <span class="material-icons-round">shield</span>
+      </div>
+      <div>
+        <h3 class="text-lg font-semibold text-white mb-1">Нет доступа</h3>
+        <p class="text-slate-400 text-sm mb-0">
+          Эта страница доступна только руководству или dev-ролям.
+        </p>
+      </div>
     </div>
   </section>
 <% } else { %>
-  <section class="admin-hero">
-    <div class="admin-hero__content">
-      <div class="admin-hero__kicker">
-        <span class="badge badge--soft">
-          <i class="bi bi-stars me-1"></i>
+  <section class="admin-hero mb-8">
+    <div class="admin-hero__content glass rounded-[2rem] p-6 md:p-8 bg-surface-dark border border-white/10">
+      <div class="admin-hero__kicker flex items-center gap-3 mb-4">
+        <span class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-primary/10 text-primary text-[11px] md:text-xs font-bold uppercase tracking-wider">
+          <span class="material-icons-round text-sm">stars</span>
           Админ панель
         </span>
-        <span class="text-muted small">управление пользователями и кейсами</span>
+        <span class="text-slate-400 text-xs md:text-sm">управление пользователями и кейсами</span>
       </div>
 
-      <h2 class="mb-2">Управление проектом</h2>
-      <p class="text-muted mb-0">
+      <h2 class="text-3xl md:text-4xl font-display font-bold text-white mb-3">Управление проектом</h2>
+      <p class="text-slate-400 text-base md:text-lg mb-0">
         Быстро редактируй кейсы, подтверждай пользователей и управляй балансом — всё здесь.
       </p>
     </div>
   </section>
 
-  <section class="row g-3 mb-4">
-    <div class="col-lg-6">
-      <button class="tile tile--users" data-modal="users-modal">
-        <div class="tile-head">
-          <div class="tile-icon"><i class="bi bi-people-fill"></i></div>
-          <div class="tile-title">
-            <h3 class="mb-1">Пользователи</h3>
-            <p class="text-muted small mb-0">Доступ, баланс, блокировки и подтверждения.</p>
-          </div>
+  <section class="grid md:grid-cols-2 gap-5 mb-8">
+    <button class="tile tile--users glass rounded-[1.75rem] border border-white/10 text-left px-6 py-6 flex flex-col gap-4" data-modal="users-modal">
+      <div class="tile-head flex items-center gap-3">
+        <div class="tile-icon w-12 h-12 rounded-2xl bg-primary/15 text-primary flex items-center justify-center">
+          <span class="material-icons-round">people</span>
         </div>
-        <div class="tile-foot">
-          <span class="tile-cta">Открыть <i class="bi bi-arrow-right"></i></span>
+        <div class="tile-title">
+          <h3 class="text-xl font-semibold text-white mb-1">Пользователи</h3>
+          <p class="text-slate-400 text-sm md:text-base mb-0">Доступ, баланс, блокировки и подтверждения.</p>
         </div>
-      </button>
-    </div>
+      </div>
+      <div class="tile-foot flex items-center justify-end">
+        <span class="tile-cta inline-flex items-center gap-1 text-primary text-sm md:text-base font-semibold">
+          Открыть
+          <span class="material-icons-round text-sm">arrow_forward</span>
+        </span>
+      </div>
+    </button>
 
-    <div class="col-lg-6">
-      <button class="tile tile--cases" data-modal="cases-modal">
-        <div class="tile-head">
-          <div class="tile-icon"><i class="bi bi-box2-heart-fill"></i></div>
-          <div class="tile-title">
-            <h3 class="mb-1">Кейсы</h3>
-            <p class="text-muted small mb-0">Создание, настройка, лимиты и отключение.</p>
-          </div>
+    <button class="tile tile--cases glass rounded-[1.75rem] border border-white/10 text-left px-6 py-6 flex flex-col gap-4" data-modal="cases-modal">
+      <div class="tile-head flex items-center gap-3">
+        <div class="tile-icon w-12 h-12 rounded-2xl bg-accent-purple/15 text-accent-purple flex items-center justify-center">
+          <span class="material-icons-round">inventory_2</span>
         </div>
-        <div class="tile-foot">
-          <span class="tile-cta">Открыть <i class="bi bi-arrow-right"></i></span>
+        <div class="tile-title">
+          <h3 class="text-xl font-semibold text-white mb-1">Кейсы</h3>
+          <p class="text-slate-400 text-sm md:text-base mb-0">Создание, настройка, лимиты и отключение.</p>
         </div>
-      </button>
-    </div>
+      </div>
+      <div class="tile-foot flex items-center justify-end">
+        <span class="tile-cta inline-flex items-center gap-1 text-accent-purple text-sm md:text-base font-semibold">
+          Открыть
+          <span class="material-icons-round text-sm">arrow_forward</span>
+        </span>
+      </div>
+    </button>
   </section>
 
   <!-- Users modal -->
@@ -63,12 +75,18 @@
 
       <div class="modal-head modal-head--sticky">
         <div class="modal-title">
-          <div class="modal-title__icon"><i class="bi bi-people"></i></div>
+          <div class="modal-title__icon">
+            <span class="material-icons-round">people</span>
+          </div>
           <div>
             <h2 class="mb-0">Пользователи</h2>
             <p class="text-muted small mb-0">Подтверждение, баланс и блокировки</p>
           </div>
         </div>
+      </div>
+
+      <div class="mt-3">
+        <input id="user-search" class="form-control" placeholder="Поиск по имени или ID">
       </div>
 
       <div class="tabs">
@@ -105,22 +123,26 @@
     <div class="modal-content">
       <button class="modal-close" data-close aria-label="Закрыть">×</button>
 
-      <div class="cases-header">
-        <div class="cases-header__left">
-          <div class="modal-title">
-          <div class="modal-title__icon"><i class="bi bi-box2-heart"></i></div>
-          <div>
-            <h2 class="mb-0">Кейсы</h2>
-            <p class="text-muted small mb-0">Создание и редактирование</p>
+      <div class="modal-head">
+        <div class="cases-header">
+          <div class="cases-header__left">
+            <div class="modal-title">
+              <div class="modal-title__icon">
+                <span class="material-icons-round">inventory_2</span>
+              </div>
+              <div>
+                <h2 class="mb-0">Кейсы</h2>
+                <p class="text-muted small mb-0">Создание и редактирование</p>
+              </div>
+            </div>
           </div>
-        </div>
-        </div>
 
-        <div class="cases-header__right">
-          <button class="btn btn-primary btn-pill" id="create-case">
-          <i class="bi bi-plus-lg me-1"></i>
-          Создать кейс
-        </button>
+          <div class="cases-header__right">
+            <button class="btn btn-primary btn-pill" id="create-case">
+              <span class="material-icons-round text-sm">add</span>
+              Создать кейс
+            </button>
+          </div>
         </div>
       </div>
       <div id="cases-admin-list" class="cases-admin-list"></div>
@@ -129,12 +151,14 @@
 
   <!-- Case editor modal -->
   <div class="modal" id="case-editor-modal" aria-hidden="true">
-    <div class="modal-content">
+    <div class="modal-content modal-content--wide">
       <button class="modal-close" data-close aria-label="Закрыть">×</button>
 
       <div class="modal-head">
         <div class="modal-title">
-          <div class="modal-title__icon"><i class="bi bi-sliders"></i></div>
+          <div class="modal-title__icon">
+            <span class="material-icons-round">tune</span>
+          </div>
           <div>
             <h2 id="case-editor-title" class="mb-0">Кейс</h2>
             <p class="text-muted small mb-0">Настройка цены, лимитов и призов</p>
@@ -154,10 +178,7 @@
             <input name="price" type="number" class="form-control" placeholder="Цена" required />
           </div>
 
-          <div class="col-md-4">
-            <label class="form-label">Минимальный уровень</label>
-            <input name="minLevel" class="form-control" placeholder="Минимальный уровень" required />
-          </div>
+          <!-- Минимальный уровень убран -->
 
           <div class="col-md-4">
             <label class="form-label">Лимит на пользователя</label>
@@ -188,7 +209,7 @@
           <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
             <h3 class="mb-0">Призы</h3>
             <button type="button" class="btn btn-outline-primary btn-sm btn-pill" id="add-prize">
-              <i class="bi bi-plus-circle me-1"></i>
+              <span class="material-icons-round text-sm">add_circle</span>
               Добавить приз
             </button>
           </div>
@@ -198,11 +219,11 @@
 
         <div class="form-actions">
           <button class="btn btn-primary btn-pill" type="submit">
-            <i class="bi bi-check2 me-1"></i>
+            <span class="material-icons-round text-sm">check</span>
             Сохранить
           </button>
           <button class="btn btn-cancel btn-pill" type="button" id="close-case-editor">
-            <i class="bi bi-x-lg me-1"></i>
+            <span class="material-icons-round text-sm">close</span>
             Отмена
           </button>
         </div>

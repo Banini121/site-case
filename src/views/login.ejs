@@ -1,48 +1,52 @@
-<div class="auth-wrapper">
-  <div class="auth-card">
-    <div class="auth-card__side" aria-hidden="true">
-      <div class="auth-card__logo">
-        <span class="brand-icon"><i class="bi bi-box-seam"></i></span>
-        <span class="brand-text">Кейсики</span>
+<div class="min-h-[calc(100vh-5rem)] flex items-center justify-center">
+  <div class="max-w-5xl w-full grid md:grid-cols-2 gap-10 glass rounded-[2rem] p-8 md:p-10">
+    <div class="space-y-6">
+      <div class="flex items-center gap-2">
+        <div class="bg-primary p-2 rounded-xl text-white shadow-lg shadow-primary/20">
+          <span class="material-icons-round">inventory_2</span>
+        </div>
+        <span class="font-display text-2xl font-bold tracking-tight text-white">
+          Кейсики
+          <span class="text-[10px] uppercase tracking-widest bg-primary/20 text-primary px-1.5 py-0.5 rounded ml-1 align-middle">Beta</span>
+        </span>
       </div>
-
-      <div class="auth-card__title">
-        <h2>Время лутать 🎁</h2>
-        <p>Авторизуйся через Discord — и открывай кейсы в 1 клик.</p>
+      <div>
+        <h2 class="text-3xl md:text-4xl font-display font-extrabold text-white mb-3">Время лутать 🎁</h2>
+        <p class="text-slate-400 text-sm md:text-base max-w-md">
+          Авторизуйся через Discord — и открывай кейсы в один клик в стильной панели.
+        </p>
       </div>
-
-      <div class="auth-card__bullets">
-        <div class="bullet">
-          <i class="bi bi-lightning-charge-fill"></i>
+      <div class="space-y-3 text-sm text-slate-300">
+        <div class="flex items-center gap-3">
+          <span class="material-icons-round text-primary text-lg">bolt</span>
           <span>Быстрое открытие кейса</span>
         </div>
-        <div class="bullet">
-          <i class="bi bi-shield-check"></i>
+        <div class="flex items-center gap-3">
+          <span class="material-icons-round text-emerald-400 text-lg">verified_user</span>
           <span>Роли и уровни доступа</span>
         </div>
-        <div class="bullet">
-          <i class="bi bi-graph-up-arrow"></i>
+        <div class="flex items-center gap-3">
+          <span class="material-icons-round text-sky-400 text-lg">insights</span>
           <span>Статистика по кейсам</span>
         </div>
       </div>
     </div>
 
-    <div class="auth-card__main">
-      <div class="auth-icon">
-        <i class="bi bi-discord"></i>
+    <div class="flex flex-col justify-center space-y-6">
+      <div class="w-14 h-14 rounded-2xl bg-indigo-500/10 border border-indigo-400/40 flex items-center justify-center text-indigo-300 text-2xl">
+        <span class="material-icons-round text-3xl">discord</span>
       </div>
-
-      <h1 class="auth-headline">Вход</h1>
-      <p class="text-muted mb-4">Нажми кнопку ниже, чтобы войти через Discord.</p>
-
-      <a class="btn btn-primary btn-lg w-100 btn-pill" href="/auth/discord">
-        <i class="bi bi-box-arrow-in-right me-1"></i>
+      <div>
+        <h1 class="text-2xl font-semibold text-white mb-2">Вход</h1>
+        <p class="text-slate-400 text-sm md:text-base">Нажми кнопку ниже, чтобы войти через Discord.</p>
+      </div>
+      <a href="/auth/discord" class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl bg-indigo-500 hover:bg-indigo-400 text-white font-semibold text-sm md:text-base shadow-lg shadow-indigo-500/30 transition-all hover:-translate-y-0.5">
+        <span class="material-icons-round text-lg">login</span>
         Войти через Discord
       </a>
-
-      <div class="auth-foot text-muted small mt-3">
+      <p class="text-slate-500 text-xs md:text-sm">
         Продолжая, вы соглашаетесь с правилами сервера.
-      </div>
+      </p>
     </div>
   </div>
 </div>

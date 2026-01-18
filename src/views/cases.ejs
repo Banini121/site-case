@@ -1,23 +1,35 @@
-<section class="card section-card">
-  <div class="section-head">
+<section class="space-y-6">
+  <div class="flex items-center justify-between flex-wrap gap-4">
     <div>
-      <h3 class="mb-1">Выберите кейс</h3>
-      <p class="text-muted small mb-0">Открой любой доступный кейс и посмотри, что выпадет 🎁</p>
+      <h2 class="text-3xl md:text-4xl font-display font-bold text-white">Выберите кейс</h2>
+      <p class="text-slate-400 mt-1 text-base md:text-lg">
+        Открой любой доступный кейс и посмотри, что выпадет 🎁
+      </p>
     </div>
 
-    <button data-action="refresh-cases" class="btn btn-outline-primary btn-sm btn-pill">
-      <i class="bi bi-arrow-repeat me-1"></i>
+    <button
+      data-action="refresh-cases"
+      class="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl border border-primary/40 text-primary hover:bg-primary hover:text-white text-sm md:text-base font-semibold transition-colors"
+    >
+      <span class="material-icons-round text-base">refresh</span>
       Обновить
     </button>
   </div>
 
-  <div id="cases-page" class="cases-grid"></div>
+  <div
+    id="cases-page"
+    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
+  ></div>
 </section>
 
-<section class="hint-card mt-3">
-  <i class="bi bi-info-circle"></i>
+<section class="mt-6 glass rounded-3xl px-5 py-4 flex items-start gap-3 text-sm">
+  <div class="w-9 h-9 rounded-2xl bg-primary/10 text-primary flex items-center justify-center flex-shrink-0">
+    <span class="material-icons-round text-lg">info</span>
+  </div>
   <div>
-    <div class="fw-semibold">Подсказка</div>
-    <div class="text-muted small">Кейсы могут иметь лимит по уровню и по количеству открытий.</div>
+    <div class="font-semibold text-white mb-0.5">Подсказка</div>
+    <div class="text-slate-400 text-xs md:text-sm">
+      Кейсы могут иметь лимит по уровню и по количеству открытий.
+    </div>
   </div>
 </section>
